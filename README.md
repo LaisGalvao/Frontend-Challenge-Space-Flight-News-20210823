@@ -1,25 +1,16 @@
-# Front-end Challenge 🏅 2021 - Space Flight News
+# Front-end Challenge 🏅- Space Flight News
 
 ## Introdução
 
-Este é um desafio para que possamos ver as suas habilidades como Front-end Developer.
+This is a challenge by Coodesh.
 
-Nesse desafio você deverá desenvolver uma aplicação web para consumir as informações da API [Space Flight News](https://api.spaceflightnewsapi.net/v3/documentation), uma API pública com informações relacionadas a voos espaciais. Caso o link não funcione, [acesse a documentação presente no Github](https://github.com/TheSpaceDevs/spaceflightnewsapi/blob/main/api/article/documentation/3.4.0/article.json).
+Nesse desafio foi proposto desenvolver uma aplicação web para consumir as informações da API [Space Flight News](https://api.spaceflightnewsapi.net/v3/documentation), uma API pública com informações relacionadas a voos espaciais.
 
-O projeto a ser desenvolvido por você tem como objetivo exibir os dados dos artigos, com o título, imagem, resumo e data de publicação. Para isso você deve seguir o wireframe que você encontrará logo abaixo. Atente-se, ao desenvolver a aplicação front-end, para conceitos de usabilidade e adeque o wireframe com elementos visuais para os usuários do seu sistema.
-
-[SPOILER] As instruções de entrega e apresentação do challenge estão no final deste Readme (=
-
-### Antes de começar
- 
-- Prepare o projeto para ser disponibilizado no Github, copiando o conteúdo deste repositório para o seu (ou utilize o fork do projeto e aponte para o Github). Confirme que a visibilidade do projeto é pública (não esqueça de colocar no readme a referência a este challenge);
-- O projeto deve utilizar a Linguagem específica na sua Vaga (caso esteja se candidatando). Por exempo: Python, R, Scala e entre outras;
-- Considere como deadline 5 dias a partir do início do desafio. Caso tenha sido convidado a realizar o teste e não seja possível concluir dentro deste período, avise a pessoa que o convidou para receber instruções sobre o que fazer.
-- Documentar todo o processo de investigação para o desenvolvimento da atividade (README.md no seu repositório); os resultados destas tarefas são tão importantes do que o seu processo de pensamento e decisões à medida que as completa, por isso tente documentar e apresentar os seus hipóteses e decisões na medida do possível.
+O projeto desenvolvido tem como objetivo exibir os dados dos artigos, com o título, imagem, resumo e data de publicação, seguindo o wireframe que você encontrará logo abaixo. Durante o desenvolvimento foi proposto me atentar, ao desenvolver a aplicação front-end, para conceitos de usabilidade e adequar o wireframe com elementos visuais para os usuários do sistema.
 
 ### Front-End:
 
-Nessa etapa você deverá desenvolver uma aplicação web para consumir a API que você criou. Você deve limitar o `request` para exibir apenas 10 resultados.
+Nessa etapa foi desenvolvida uma aplicação web para consumir a API, e limitando o `request` para exibir apenas 10 resultados.
 
 Para o desenvolvimento você pode utilizar algum framework CSS. Recomendamos alguns:
 - Tailwind CSS: https://tailwindcss.com/
