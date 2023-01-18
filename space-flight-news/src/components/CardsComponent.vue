@@ -1,52 +1,24 @@
 <template>
   <div class="fadeIn">
-   <!--  <section :class="'hero-body hero-bgimg-' + imageTitle">
-       <figure class="image is-128x128">
-          <img class="is-rounded" :src="image" :alt="alt" />
-        </figure>
-      <section class="hero is-light is-large hero-opacity">
-        <h1 class="hero-opacity title">
-          {{ title }}
-        </h1>
-        <br />
-        <p class="hero-opacity subtitle is-size-5">
-          {{ desc }}
-        </p>
-      </section>
-    </section> -->
-    <b-card
+    <div
     :title="title"
     :img-src="image"
     :img-alt="alt"
     img-top
     tag="article"
     style="max-width: 20rem;"
-    class="image-card "
+    class="card"
   >
-    <b-card-text>
+    <section class="section">
      {{desc}}
-    </b-card-text>
-  </b-card>
+    </section>
   </div>
-
-  <!--  <b-card
-    :title="title"
-    :img-src="image"
-    :img-alt="alt"
-    img-top
-    tag="article"
-    style="max-width: 20rem;"
-    class="image-card "
-  >
-    <b-card-text>
-     {{desc}}
-    </b-card-text>
-  </b-card> -->
+  </div>
 </template>
 <script>
 export default {
-  props: ["title", "imageTitle", "image", "alt", "card_class", "desc"]
-};
+  props: ['title', 'imageTitle', 'image', 'alt', 'card_class', 'desc']
+}
 </script>
 <style scoped>
 .section:hover {

@@ -1,29 +1,24 @@
 <template>
-  <div>
-    <b-input-group prepend-html='<i class="icon-custom-search-bar"></i>'>
-          <b-form-input
+  <div class="filter-flex-container">
+    <input
             type="search"
             placeholder="Buscar Funcionalidade"
             class="input-search"
-          ></b-form-input>
-        </b-input-group>
+          >
     <span @click="filterSwitch" :class="'filter' + (filter ? ' actived' : '')"
       ><i class="material-icons-outlined">filter_alt</i>Filtrar</span
     >
-    <span class="v-separator"></span>
-    <b-form-select
+    <select
       id="sort-by-select"
       @change="$emit('sort', $event, direction)"
       :options="sortOptions"
       v-model="sortBy"
       class="select"
     >
-      <template #first>
-        <b-form-select-option :value="undefined" disabled
-          >Ordenar</b-form-select-option
+        <option :value="undefined" disabled
+          >Ordenar</option
         >
-      </template>
-    </b-form-select>
+    </select>
     <div class="direction" @click="toggleDirection">
       <transition name="rotate">
         <i v-bind:key="direction" class="material-icons-outlined">{{
@@ -64,4 +59,16 @@ export default {
 </script>
 
 <style>
+.direction{
+  vertical-align: middle
+  }
+
+  .filter-flex-container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: flex-end;
+    align-items: center;
+  }
 </style>
