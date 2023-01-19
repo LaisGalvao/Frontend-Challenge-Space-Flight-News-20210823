@@ -1,4 +1,9 @@
 <template>
+  <div>
+    <nav>
+      <SortByComponent :sortOptions="options" :search="search"/>
+      <h1 class="display-4 my-5"> Space Flight News</h1>
+    </nav>
   <div class="home">
     <div v-if="loading">
       <b-spinner class="loading" type="grow" label="Loading..."></b-spinner>
@@ -11,19 +16,33 @@
       :desc="card.summary"
       :site="card.newsSite"/>
     </div>
+    <div v-if="search" :v-for="(card, index) in searchData" :key="index">
+      <CardsComponent
+      :title="card.title"
+      :image="card.imageUrl"
+      :date="card.publishedAt | dateFormat"
+      :desc="card.summary"
+      :site="card.newsSite"/>
+    </div>
+    <div v-else-if="!search && !loading">
+      No results found
+    </div>
     <b-button class="btn-carregar-mais">carregar mais</b-button>
   </div>
+</div>
 </template>
 
 <script>
 // @ is an alias to /src
 import CardsComponent from '@/components/CardsComponent.vue'
+import SortByComponent from '@/components/SortByComponent.vue'
 import { api } from '@/services'
 
 export default {
   name: 'HomeView',
   components: {
-    CardsComponent
+    CardsComponent,
+    SortByComponent
   },
   data () {
     return {
@@ -55,6 +74,12 @@ export default {
     }
   },
   computed: {
+    options () {
+      return [
+        { value: 'antigas', text: 'Mais antigas' },
+        { value: 'novas', text: 'Mais novas' }
+      ]
+    },
     cards () {
       return this.$store.getters.cards
     },

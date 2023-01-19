@@ -1,27 +1,11 @@
 <template>
   <div id="app">
-    <nav>
-      <SortByComponent :sortOptions="options" :search="search"/>
-      <h1 class="display-4 my-5"> Space Flight News</h1>
-    </nav>
     <router-view/>
   </div>
 </template>
 <script>
-import SortByComponent from './components/SortByComponent.vue'
-/* import { toOptions } from './utils' */
+
 export default {
-  components: {
-    SortByComponent
-  },
-  computed: {
-    options () {
-      return [
-        { value: 'antigas', text: 'Mais antigas' },
-        { value: 'novas', text: 'Mais novas' }
-      ]
-    }
-  }
 }
 </script>
 
