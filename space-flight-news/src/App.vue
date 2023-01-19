@@ -1,24 +1,34 @@
 <template>
   <div id="app">
     <nav>
-      <SortByComponent/>
-    Space Flight News
+      <SortByComponent :sortOptions="options" :search="search"/>
+      <h1 class="display-4 my-5"> Space Flight News</h1>
     </nav>
     <router-view/>
   </div>
 </template>
 <script>
 import SortByComponent from './components/SortByComponent.vue'
+/* import { toOptions } from './utils' */
 export default {
   components: {
     SortByComponent
+  },
+  computed: {
+    options () {
+      return [
+        { value: 'antigas', text: 'Mais antigas' },
+        { value: 'novas', text: 'Mais novas' }
+      ]
+    }
   }
 }
 </script>
 
 <style>
+@import url('https://fonts.cdnfonts.com/css/roboto-condensed');
 #app {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-family: 'Roboto Condensed', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
