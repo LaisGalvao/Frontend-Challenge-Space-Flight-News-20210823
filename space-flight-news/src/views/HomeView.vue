@@ -1,7 +1,7 @@
 <template>
   <div>
     <nav>
-      <SortByComponent :sortOptions="options" :search="search"/>
+      <SortByComponent :sortOptions="options" @changeData="searchData()"/>
       <h1 class="display-4 my-5"> Space Flight News</h1>
     </nav>
   <div class="home">
@@ -16,7 +16,7 @@
       :desc="card.summary"
       :site="card.newsSite"/>
     </div>
-    <div v-if="search" :v-for="(card, index) in searchData" :key="index">
+    <!-- <div v-if="search" :v-for="(card, index) in searchData" :key="index">
       <CardsComponent
       :title="card.title"
       :image="card.imageUrl"
@@ -26,7 +26,7 @@
     </div>
     <div v-else-if="!search && !loading">
       No results found
-    </div>
+    </div> -->
     <b-button class="btn-carregar-mais">carregar mais</b-button>
   </div>
 </div>
@@ -71,6 +71,9 @@ export default {
           this.$store.dispatch('getArticles', response.data)
         }
       })
+    },
+    searchData (data) {
+      return data
     }
   },
   computed: {
@@ -82,18 +85,6 @@ export default {
     },
     cards () {
       return this.$store.getters.cards
-    },
-    searchData () {
-      if (this.search) {
-        return this.cards.filter((item) => {
-          return this.search
-            .toLowerCase()
-            .split(' ')
-            .every((v) => item.title.toLowerCase().includes(v))
-        })
-      } else {
-        return ''
-      }
     }
   }
 }

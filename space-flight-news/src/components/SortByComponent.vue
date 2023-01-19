@@ -2,7 +2,7 @@
   <div class="filter-flex-container">
     <b-input-group class="input-search" prepend-html='<span class="material-icons">search</span>'>
     <b-form-input
-            :v-model="search"
+            @input="searchData()"
             type="search"
             placeholder="Search"
           ></b-form-input>
@@ -29,16 +29,29 @@ export default {
   data: () => ({
     sortBy: undefined,
     filter: false
+    // search: null
   }),
   methods: {
     filterSwitch () {
       this.filter = !this.filter
       this.$emit('filter', this.filter)
+    },
+    searchData (val) {
+      console.log(val)
+      return this.$store.getters.cards.filter((item) => {
+        val
+          .toLowerCase()
+          .split(' ')
+          .every((v) => item.title.toLowerCase().includes(v))
+        return this.$emit('changeData', val)
+      })
+      /* else {
+        return this.$store.getters.cards
+      } */
     }
   },
   props: {
-    sortOptions: Array,
-    search: Array
+    sortOptions: Array
   }
 }
 </script>
