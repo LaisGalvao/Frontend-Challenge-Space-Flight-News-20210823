@@ -1,12 +1,4 @@
 <template>
-  <div class="filter-flex-container">
-    <b-input-group class="input-search" prepend-html='<span class="material-icons">search</span>'>
-    <b-form-input
-            @input="searchData()"
-            type="search"
-            placeholder="Search"
-          ></b-form-input>
-    </b-input-group>
     <b-form-select
       id="sort-by-select"
       @change="$emit('sort', $event, direction)"
@@ -20,7 +12,6 @@
         >
       </template>
     </b-form-select>
-  </div>
 </template>
 
 <script>
@@ -35,19 +26,6 @@ export default {
     filterSwitch () {
       this.filter = !this.filter
       this.$emit('filter', this.filter)
-    },
-    searchData (val) {
-      console.log(val)
-      return this.$store.getters.cards.filter((item) => {
-        val
-          .toLowerCase()
-          .split(' ')
-          .every((v) => item.title.toLowerCase().includes(v))
-        return this.$emit('changeData', val)
-      })
-      /* else {
-        return this.$store.getters.cards
-      } */
     }
   },
   props: {
@@ -71,12 +49,5 @@ export default {
   }
   .custom-select{
     width: auto !important;
-  }
-  .input-search{
-    width: 30% !important;
-    height: 2rem;
-    border-radius: 5px;
-    outline:none !important;
-    border: solid 0.5px slategrey !important;
   }
 </style>

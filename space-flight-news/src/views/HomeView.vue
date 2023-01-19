@@ -1,7 +1,10 @@
 <template>
   <div>
     <nav>
-      <SortByComponent :sortOptions="options" @changeData="searchData()"/>
+      <div class="filter-flex-container">
+        <SearchFilterComponent :search="search"/>
+        <SortByComponent :sortOptions="options" />
+      </div>
       <h1 class="display-4 my-5"> Space Flight News</h1>
     </nav>
   <div class="home">
@@ -16,7 +19,7 @@
       :desc="card.summary"
       :site="card.newsSite"/>
     </div>
-    <!-- <div v-if="search" :v-for="(card, index) in searchData" :key="index">
+    <!-- <div :v-if="search" v-for="(card, index) in searchData" :key="index">
       <CardsComponent
       :title="card.title"
       :image="card.imageUrl"
@@ -24,7 +27,7 @@
       :desc="card.summary"
       :site="card.newsSite"/>
     </div>
-    <div v-else-if="!search && !loading">
+    <div :v-else-if="!search && !loading">
       No results found
     </div> -->
     <b-button class="btn-carregar-mais">carregar mais</b-button>
@@ -36,18 +39,20 @@
 // @ is an alias to /src
 import CardsComponent from '@/components/CardsComponent.vue'
 import SortByComponent from '@/components/SortByComponent.vue'
+import SearchFilterComponent from '@/components/SearchFilterComponent.vue'
 import { api } from '@/services'
 
 export default {
   name: 'HomeView',
   components: {
     CardsComponent,
-    SortByComponent
+    SortByComponent,
+    SearchFilterComponent
   },
   data () {
     return {
       loading: true,
-      search: null
+      search: ''
     }
   },
   filters: {
@@ -71,9 +76,6 @@ export default {
           this.$store.dispatch('getArticles', response.data)
         }
       })
-    },
-    searchData (data) {
-      return data
     }
   },
   computed: {
@@ -84,8 +86,19 @@ export default {
       ]
     },
     cards () {
-      return this.$store.getters.cards
-    }
+      let items = []
+      items = this.$store.getters.cards.filter((item) => {
+        return this.search
+          .toLowerCase()
+          .split(' ')
+          .every((v) => item.title.toLowerCase().includes(v))
+      })
+
+      return items
+    }/* ,
+    searchData () {
+      i
+    } */
   }
 }
 </script>
