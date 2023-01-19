@@ -1,59 +1,44 @@
 <template>
   <div class="filter-flex-container">
-    <input
+    <b-input-group class="input-search" prepend-html='<span class="material-icons">search</span>'>
+    <b-form-input
+            :v-model="search"
             type="search"
-            placeholder="Buscar Funcionalidade"
-            class="input-search"
-          >
-    <span @click="filterSwitch" :class="'filter' + (filter ? ' actived' : '')"
-      ><i class="material-icons-outlined">filter_alt</i>Filtrar</span
-    >
-    <select
+            placeholder="Search"
+          ></b-form-input>
+    </b-input-group>
+    <b-form-select
       id="sort-by-select"
       @change="$emit('sort', $event, direction)"
       :options="sortOptions"
       v-model="sortBy"
       class="select"
     >
-        <option :value="undefined" disabled
-          >Ordenar</option
+    <template #first>
+        <b-form-select-option :value="undefined" disabled
+          >Ordenar por</b-form-select-option
         >
-    </select>
-    <div class="direction" @click="toggleDirection">
-      <transition name="rotate">
-        <i v-bind:key="direction" class="material-icons-outlined">{{
-          direction ? "arrow_upward" : "arrow_downward"
-        }}</i>
-      </transition>
-    </div>
+      </template>
+    </b-form-select>
   </div>
 </template>
 
 <script>
 export default {
+  name: 'SortByComponent',
   data: () => ({
     sortBy: undefined,
-    filter: false,
-    direction: true // up true = asc, down false = desc
+    filter: false
   }),
   methods: {
     filterSwitch () {
       this.filter = !this.filter
       this.$emit('filter', this.filter)
-    },
-    firstSelect () {
-      this.$emit('firstSelect')
-    },
-    toggleDirection () {
-      this.direction = !this.direction
-      if (this.sortBy) {
-        this.$emit('sort', this.sortBy, this.direction)
-      }
     }
   },
   props: {
-    sortOptions: Array
-
+    sortOptions: Array,
+    search: Array
   }
 }
 </script>
@@ -70,5 +55,15 @@ export default {
     align-content: center;
     justify-content: flex-end;
     align-items: center;
+  }
+  .custom-select{
+    width: auto !important;
+  }
+  .input-search{
+    width: 30% !important;
+    height: 2rem;
+    border-radius: 5px;
+    outline:none !important;
+    border: solid 0.5px slategrey !important;
   }
 </style>

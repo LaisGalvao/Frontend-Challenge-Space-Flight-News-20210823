@@ -1,58 +1,55 @@
 <template>
   <div class="fadeIn">
-    <div
-    :title="title"
-    :img-src="image"
-    :img-alt="alt"
-    img-top
-    tag="article"
-    style="max-width: 20rem;"
-    class="card"
-  >
-    <section class="section">
-     {{desc}}
-    </section>
-  </div>
+  <b-card no-body class="overflow-hidden section" style="max-width: 70%;">
+    <b-row >
+      <b-col md="6">
+        <b-card-img :src="image" :alt="alt" class="rounded-0" style="height: -webkit-fill-available"></b-card-img>
+      </b-col>
+      <b-col md="6">
+        <b-card-body :title="title">
+          <b-card-sub-title>{{ date }}</b-card-sub-title>
+          <b-badge class="badge-site">{{site}}</b-badge>
+          <b-card-text>
+            {{desc}}
+          </b-card-text>
+          <b-button class="btn-action">Ver mais</b-button>
+        </b-card-body>
+      </b-col>
+    </b-row>
+  </b-card>
   </div>
 </template>
 <script>
 export default {
-  props: ['title', 'imageTitle', 'image', 'alt', 'card_class', 'desc']
+  props: ['title', 'site', 'image', 'alt', 'date', 'desc']
 }
 </script>
 <style scoped>
 .section:hover {
-  /*  border: 1px solid transparent !important; */
   transform: scale(1.1) !important;
-  /*   box-shadow: 0 5px slategrey !important; */
   transition: transform 500ms ease 0s, opacity 500ms ease 0s,
     visibility 500ms ease 0s;
 }
 
 .section {
   background: whitesmoke;
-  /*   border: 0.9px solid; */
   border-color: slategrey;
   border-radius: 15px;
   position: relative;
   opacity: 0.9;
-  display: inline-flex !important;
-  /*  height: 130px !important; */
-  width: auto;
-  margin: auto auto 2% auto;
+  margin: 3% auto;
+}
+.btn-action{
+  background-color: #d07017;
 }
 
-.media-content {
-  padding: 3%;
+.btn-action:hover{
+  background-color: #302e53;
 }
 
-.image img {
-  display: block;
-  height: 128px !important;
-  width: 100%;
-  border-radius: 15px !important;
+.badge-site{
+  background-color: #302e53;
 }
-
 .fadeIn {
   opacity: 1;
   animation-name: FadeIn;
@@ -68,38 +65,5 @@ export default {
   100% {
     opacity: 1;
   }
-}
-
-.hero-opacity,
-.hero-opacity.title,
-.hero-opacity.subtitle {
-  opacity: 100% !important;
-}
-
-.hero-bgimg-residencia {
-  background-image: url(https://drive.google.com/uc?export=view&id=1rl3RgWFu_VYUlNlj9Y2XYG3SCz0uDpt-);
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-size: cover;
-  opacity: 0.8;
-}
-
-.hero-bgimg-predio {
-  background-image: url(https://drive.google.com/uc?export=view&id=1H9XSbGNxIUGKlxeAP8wXlRm5r8ttWPwu);
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-size: cover;
-  opacity: 0.8;
-}
-
-.hero-bgimg-comercio {
-  background-image: url(https://drive.google.com/uc?export=view&id=19mSrBevky7pAqtFF2bqCgfNhlQ5j3kHC);
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-size: cover;
-  opacity: 0.8;
 }
 </style>
