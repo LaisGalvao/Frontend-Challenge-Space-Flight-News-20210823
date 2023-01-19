@@ -2,7 +2,13 @@
   <div>
     <nav>
       <div class="filter-flex-container">
-        <SearchFilterComponent :search="search"/>
+        <b-input-group class="input-search" prepend-html='<span class="material-icons">search</span>'>
+          <b-form-input
+                  v-model="search"
+                  type="search"
+                  placeholder="Search"
+                ></b-form-input>
+          </b-input-group>
         <SortByComponent :sortOptions="options" />
       </div>
       <h1 class="display-4 my-5"> Space Flight News</h1>
@@ -15,21 +21,11 @@
       <CardsComponent
       :title="card.title"
       :image="card.imageUrl"
-      :date="card.publishedAt | dateFormat"
+      :date="card.publishedAt"
       :desc="card.summary"
       :site="card.newsSite"/>
     </div>
-    <!-- <div :v-if="search" v-for="(card, index) in searchData" :key="index">
-      <CardsComponent
-      :title="card.title"
-      :image="card.imageUrl"
-      :date="card.publishedAt | dateFormat"
-      :desc="card.summary"
-      :site="card.newsSite"/>
-    </div>
-    <div :v-else-if="!search && !loading">
-      No results found
-    </div> -->
+
     <b-button class="btn-carregar-mais">carregar mais</b-button>
   </div>
 </div>
@@ -39,15 +35,13 @@
 // @ is an alias to /src
 import CardsComponent from '@/components/CardsComponent.vue'
 import SortByComponent from '@/components/SortByComponent.vue'
-import SearchFilterComponent from '@/components/SearchFilterComponent.vue'
 import { api } from '@/services'
 
 export default {
   name: 'HomeView',
   components: {
     CardsComponent,
-    SortByComponent,
-    SearchFilterComponent
+    SortByComponent
   },
   data () {
     return {
@@ -88,17 +82,17 @@ export default {
     cards () {
       let items = []
       items = this.$store.getters.cards.filter((item) => {
-        return this.search
-          .toLowerCase()
-          .split(' ')
-          .every((v) => item.title.toLowerCase().includes(v))
+        return (
+          item.title.toLowerCase().indexOf(this.search.toLowerCase()) > -1 ||
+          item.summary.toLowerCase().indexOf(this.search.toLowerCase()) > -1
+        )
       })
-
+      console.log(items)
+      if (this.search.length === 0) {
+        return items.push('No results found')
+      }
       return items
-    }/* ,
-    searchData () {
-      i
-    } */
+    }
   }
 }
 </script>
