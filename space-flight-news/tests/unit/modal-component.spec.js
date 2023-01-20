@@ -1,19 +1,42 @@
-import { mount } from '@vue/test-utils'
-import ModalComponent from '@/components/ModalComponent.vue'
+import { shallowMount } from '@vue/test-utils'
+import ModalComponent from '@/components/ModalComponent'
 
 describe('ModalComponent', () => {
-  test('emits an event when the goToSite button is clicked', () => {
-    const wrapper = mount(ModalComponent, {
+  test('emits "go-to-site" event when button is clicked', () => {
+    const wrapper = shallowMount(ModalComponent, {
       propsData: {
         id: 1,
-        site: 'https://www.example.com'
+        site: 'https://example.com'
       }
     })
 
-    const button = wrapper.find('.btn-action')
+    wrapper.find('.btn-action').trigger('click')
+    expect(wrapper.emitted()['go-to-site'])
+  })
 
-    button.trigger('click')
-    expect(wrapper.vm.goToSite).toHaveBeenCalled()
-    expect(wrapper.vm.goToSite).toHaveBeenCalledWith('https://www.example.com')
+  test('opens a new tab with the given site when button is clicked', () => {
+    const openMock = jest.fn()
+    window.open = openMock
+
+    const wrapper = shallowMount(ModalComponent, {
+      propsData: {
+        id: 1,
+        site: 'https://example.com'
+      }
+    })
+
+    wrapper.find('.btn-action').trigger('click')
+    expect(openMock).toHaveBeenCalledWith('https://example.com', '_blank')
+  })
+
+  test('has the correct id', () => {
+    const wrapper = shallowMount(ModalComponent, {
+      propsData: {
+        id: 1,
+        site: 'https://example.com'
+      }
+    })
+
+    expect(wrapper.attributes().id).toBe('1')
   })
 })
