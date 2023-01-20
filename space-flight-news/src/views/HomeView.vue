@@ -9,7 +9,14 @@
                   placeholder="Search"
                 ></b-form-input>
           </b-input-group>
-        <SortByComponent :sortOptions="options" />
+            <b-form-select
+              id="sort-by-select"
+              @change="sortByDate(selected)"
+              :options="options"
+              v-model="selected"
+              class="select"
+            >
+            </b-form-select>
       </div>
       <h1 class="display-4 my-5"> Space Flight News</h1>
     </nav>
@@ -19,14 +26,40 @@
     </div>
     <div v-for="(card, index) in cards" :key="index">
       <CardsComponent
+      :id="card.id"
       :title="card.title"
       :image="card.imageUrl"
+      :alt="card.title"
       :date="card.publishedAt"
       :desc="card.summary"
-      :site="card.newsSite"/>
-    </div>
+      :site="card.newsSite"
+      :modal="card.id"/>
 
-    <b-button class="btn-carregar-mais">carregar mais</b-button>
+      <ModalComponent :id="card.id" :site="card.url">
+         <template slot="img">
+          <b-col md="6">
+            <b-card-img
+            :src="card.imageUrl"
+            :alt="card.title"
+            class="rounded-0"
+            style="height: -webkit-fill-available">
+          </b-card-img>
+          </b-col>
+         </template>
+          <template slot="content">
+            <b-card-body :title="card.title">
+              <b-card-sub-title>{{ card.publishedAt }}</b-card-sub-title>
+              <b-badge class="badge-site">{{card.newsSite}}</b-badge>
+              <b-card-text>
+                {{card.summary}}
+              </b-card-text>
+            </b-card-body>
+          </template>
+      </ModalComponent>
+
+    </div>
+    <b-button class="btn-carregar-mais text-uppercase" @click="loadDataOnDemand" v-observe-visibility="visibilityChanged">
+     carregar mais</b-button>
   </div>
 </div>
 </template>
@@ -34,19 +67,27 @@
 <script>
 // @ is an alias to /src
 import CardsComponent from '@/components/CardsComponent.vue'
-import SortByComponent from '@/components/SortByComponent.vue'
+/* import SortByComponent from '@/components/SortByComponent.vue' */
+import ModalComponent from '@/components/ModalComponent.vue'
 import { api } from '@/services'
 
 export default {
   name: 'HomeView',
   components: {
     CardsComponent,
-    SortByComponent
+    /* SortByComponent, */
+    ModalComponent
   },
   data () {
     return {
       loading: true,
-      search: ''
+      search: '',
+      limit: 10,
+      selected: '',
+      options: [
+        { value: 'antigas', text: 'Mais antigas' },
+        { value: 'novas', text: 'Mais novas' }
+      ]
     }
   },
   filters: {
@@ -60,25 +101,48 @@ export default {
     }
   },
   mounted () {
-    window.setTimeout(this.getData, 2000)
+    window.setTimeout(this.getData(this.limit), 2000)
   },
   methods: {
-    getData () {
-      api.get('/articles').then(response => {
+    getData (limit) {
+      api.get(`/articles?_limit=${limit}`).then(response => {
         if (response.status === 200) {
           this.loading = false
           this.$store.dispatch('getArticles', response.data)
         }
       })
+    },
+    visibilityChanged (isVisible) {
+      // if (!isVisible) return
+      localStorage.setItem('visible', isVisible)
+    },
+    loadDataOnDemand () {
+      if (localStorage.getItem('visible')) {
+        this.limit = this.limit + 10
+        this.getData(this.limit)
+      }
+    },
+    sortByDate (selected, cards) {
+      cards = this.cards
+      cards.sort(function (a, b) {
+        if (selected === 'antigas') {
+          if (a.publishedAt < b.publishedAt) {
+            return 1
+          }
+        }
+        if (selected === 'novas') {
+          if (a.publishedAt > b.publishedAt) {
+            return -1
+          }
+        }
+
+        return 0
+      })
+
+      return cards
     }
   },
   computed: {
-    options () {
-      return [
-        { value: 'antigas', text: 'Mais antigas' },
-        { value: 'novas', text: 'Mais novas' }
-      ]
-    },
     cards () {
       let items = []
       items = this.$store.getters.cards.filter((item) => {
@@ -87,9 +151,10 @@ export default {
           item.summary.toLowerCase().indexOf(this.search.toLowerCase()) > -1
         )
       })
-      console.log(items)
-      if (this.search.length === 0) {
-        return items.push('No results found')
+      console.log(this.$store.getters.cards)
+      if (items.length === 0) {
+        items = ['No results found']
+        return items
       }
       return items
     }
@@ -107,9 +172,14 @@ export default {
 }
 .loading{
   background-color: #302e53;
+  color: #fff;
 }
 .btn-carregar-mais{
   margin: 5%;
   background-color: #302e53;
+  color: #fff;
+}
+.input-group {
+  width: auto!important
 }
 </style>

@@ -1,29 +1,37 @@
 <template>
-  <div class="fadeIn">
-  <b-card :id="id" class="overflow-hidden section" style="max-width: 70%;">
+  <b-modal size="xl" :id="id.toString()" hide-footer centered>
     <b-row>
-      <b-col md="6">
-        <b-card-img :src="image" :alt="alt" class="rounded-0" style="height: -webkit-fill-available"></b-card-img>
-      </b-col>
-      <b-col md="6">
-        <b-card-body :title="title">
-          <b-card-sub-title>{{ date }}</b-card-sub-title>
-          <b-badge class="badge-site">{{site}}</b-badge>
-          <b-card-text>
-            {{desc}}
-          </b-card-text>
-          <b-button class="btn-action" v-b-modal.modal-lg @click="$bvModal.show(modal.toString())">Ver mais</b-button>
-        </b-card-body>
-      </b-col>
+    <slot name="img"></slot>
+    <b-col md="6">
+      <slot name="content"></slot>
+      <b-button class="btn-action" style="margin: auto;display: flex;"
+      @click="goToSite(site)">Ir para o site</b-button>
+    </b-col>
     </b-row>
-  </b-card>
-  </div>
+  </b-modal>
 </template>
+
 <script>
 export default {
-  props: ['id', 'title', 'site', 'image', 'alt', 'date', 'desc', 'modal']
+  name: 'ModalComponent',
+  props: {
+    id: {
+      type: Number,
+      required: true
+    },
+    site: {
+      type: String,
+      required: true
+    }
+  },
+  methods: {
+    goToSite (site) {
+      window.open(site, '_blank')
+    }
+  }
 }
 </script>
+
 <style scoped>
 .section:hover {
   transform: scale(1.1) !important;
