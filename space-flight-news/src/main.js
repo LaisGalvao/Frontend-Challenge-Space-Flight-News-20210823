@@ -4,6 +4,10 @@ import router from './router'
 import store from './store'
 import './plugins/bootstrap-vue'
 
+import { ObserveVisibility } from 'vue-observe-visibility'
+
+Vue.directive('observe-visibility', ObserveVisibility)
+
 Vue.config.productionTip = false
 
 new Vue({
