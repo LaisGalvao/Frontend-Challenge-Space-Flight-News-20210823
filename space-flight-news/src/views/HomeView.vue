@@ -1,7 +1,7 @@
 <template>
   <div>
-    <nav>
-      <div class="filter-flex-container">
+    <nav class="nav-style">
+      <div class="filter-flex-container my-2 py-2 px-5">
         <b-input-group class="input-search" prepend-html='<span class="material-icons">search</span>'>
           <b-form-input
                   v-model="search"
@@ -21,7 +21,10 @@
             </template>
             </b-form-select>
       </div>
-      <h1 class="display-4 my-5"> Space Flight News</h1>
+      <h1 class="display-5 my-3">
+        <span class="material-icons">
+          rocket_launch
+        </span> Space Flight News</h1>
     </nav>
   <div class="home">
     <div v-if="loading">
@@ -44,7 +47,7 @@
             <b-card-img
             :src="card.imageUrl"
             :alt="card.title"
-            class="rounded-0"
+            class="rounded-2"
             style="height: -webkit-fill-available">
           </b-card-img>
           </b-col>
@@ -172,7 +175,13 @@ export default {
 }
 </script>
 <style scoped>
+
+.nav-style{
+  box-shadow: 0px 5px #302e5383;
+}
 .home{
+    position: relative;
+    top: 15rem;
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;

@@ -3,7 +3,7 @@
   <b-card :id="id" class="overflow-hidden section" style="max-width: 70%;">
     <b-row>
       <b-col md="6">
-        <b-card-img :src="image" :alt="alt" class="rounded-0" style="height: -webkit-fill-available"></b-card-img>
+        <b-card-img :src="image" :alt="alt" class="rounded-2" style="height: -webkit-fill-available"></b-card-img>
       </b-col>
       <b-col md="6">
         <b-card-body :title="title">
@@ -33,11 +33,12 @@ export default {
 
 .section {
   background: whitesmoke;
-  border-color: slategrey;
+  border: solid 0.7px slategrey;
   border-radius: 15px;
   position: relative;
   opacity: 0.9;
   margin: 3% auto;
+  box-shadow: 5px 5px #302e5383;
 }
 .btn-action{
   background-color: #d07017;

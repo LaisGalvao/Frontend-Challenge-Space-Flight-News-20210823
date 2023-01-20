@@ -17,10 +17,15 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  background-color: #c0c0c070;
 }
 
 nav {
-  padding: 30px;
+  width: 100%;
+  padding: 10px;
+  position: fixed;
+  background-color: #FFF;
+  z-index: 999;
 }
 
 nav a {
