@@ -1,5 +1,5 @@
 <template>
-  <b-modal size="xl" :id="id.toString()" hide-footer centered>
+  <b-modal size="xl" :id="id" hide-footer centered>
     <b-row>
     <slot name="img"></slot>
     <b-col md="6">

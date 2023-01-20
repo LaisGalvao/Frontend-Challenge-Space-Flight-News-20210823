@@ -12,7 +12,7 @@
           <b-card-text>
             {{desc}}
           </b-card-text>
-          <b-button class="btn-action" v-b-modal.modal-lg @click="$bvModal.show(modal.toString())">Ver mais</b-button>
+          <b-button class="btn-action" v-b-modal.modal-xl @click="$bvModal.show(modal.toString())">Ver mais</b-button>
         </b-card-body>
       </b-col>
     </b-row>
