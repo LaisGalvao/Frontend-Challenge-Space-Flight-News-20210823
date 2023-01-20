@@ -16,6 +16,9 @@
               v-model="selected"
               class="select"
             >
+            <template #first>
+              <b-form-select-option :value="null" disabled>-- Ordenar por --</b-form-select-option>
+            </template>
             </b-form-select>
       </div>
       <h1 class="display-4 my-5"> Space Flight News</h1>
@@ -30,7 +33,7 @@
       :title="card.title"
       :image="card.imageUrl"
       :alt="card.title"
-      :date="card.publishedAt"
+      :date="card.publishedAt | dateFormat"
       :desc="card.summary"
       :site="card.newsSite"
       :modal="card.id"/>
@@ -48,7 +51,7 @@
          </template>
           <template slot="content">
             <b-card-body :title="card.title">
-              <b-card-sub-title>{{ card.publishedAt }}</b-card-sub-title>
+              <b-card-sub-title>{{ card.publishedAt | dateFormat }}</b-card-sub-title>
               <b-badge class="badge-site">{{card.newsSite}}</b-badge>
               <b-card-text>
                 {{card.summary}}
@@ -58,7 +61,13 @@
       </ModalComponent>
 
     </div>
-    <b-button class="btn-carregar-mais text-uppercase" @click="loadDataOnDemand" v-observe-visibility="visibilityChanged">
+    <div v-if="!cards.length">
+       <h2> No results found</h2>
+      </div>
+    <b-button v-if="cards.length"
+     class="btn-carregar-mais text-uppercase"
+     @click="loadDataOnDemand"
+     v-observe-visibility="visibilityChanged">
      carregar mais</b-button>
   </div>
 </div>
@@ -122,15 +131,20 @@ export default {
         this.getData(this.limit)
       }
     },
-    sortByDate (selected, cards) {
-      cards = this.cards
-      cards.sort(function (a, b) {
+    sortByDate (selected) {
+      this.cards.sort(function (a, b) {
         if (selected === 'antigas') {
-          if (a.publishedAt < b.publishedAt) {
+          if (a.publishedAt > b.publishedAt) {
             return 1
+          }
+          if (a.publishedAt < b.publishedAt) {
+            return -1
           }
         }
         if (selected === 'novas') {
+          if (a.publishedAt < b.publishedAt) {
+            return 1
+          }
           if (a.publishedAt > b.publishedAt) {
             return -1
           }
@@ -139,7 +153,7 @@ export default {
         return 0
       })
 
-      return cards
+      return this.$store.dispatch('getArticles', this.cards)
     }
   },
   computed: {
@@ -151,11 +165,7 @@ export default {
           item.summary.toLowerCase().indexOf(this.search.toLowerCase()) > -1
         )
       })
-      console.log(this.$store.getters.cards)
-      if (items.length === 0) {
-        items = ['No results found']
-        return items
-      }
+
       return items
     }
   }
@@ -181,5 +191,18 @@ export default {
 }
 .input-group {
   width: auto!important
+}
+
+.filter-flex-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+#sort-by-select{
+  width: auto;
 }
 </style>
