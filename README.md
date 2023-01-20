@@ -47,5 +47,7 @@ Nessa etapa foi desenvolvida uma aplicação web para consumir a API, e limitand
 
 **Obrigatório 6** - Ao clicar no botão "Carregar mais" deve fazer uma nova requisição para carregar mais 10 artigos na página. ✅
 
-**Diferencial 1** Escrever Unit Tests ou E2E Test. Escolher a melhor abordagem e biblioteca; ✅
+#### Dos requisitos diferenciais, foi feito: 
+
+**Escrever Unit Tests ou E2E Test. Fiz os testes unitários, utilizando Jest + vue test utils✅**
 
