@@ -38,7 +38,7 @@
       :site="card.newsSite"
       :modal="card.id"/>
 
-      <ModalComponent :id="card.id" :site="card.url">
+      <ModalComponent :id="card.id.toString()" :site="card.url">
          <template slot="img">
           <b-col md="6">
             <b-card-img
@@ -61,9 +61,9 @@
       </ModalComponent>
 
     </div>
-    <div v-if="!cards.length">
+    <div v-if="!cards.length && search.length > 0">
        <h2> No results found</h2>
-      </div>
+    </div>
     <b-button v-if="cards.length"
      class="btn-carregar-mais text-uppercase"
      @click="loadDataOnDemand"
