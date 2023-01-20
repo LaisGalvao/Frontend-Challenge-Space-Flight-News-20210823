@@ -77,9 +77,7 @@
 </template>
 
 <script>
-// @ is an alias to /src
 import CardsComponent from '@/components/CardsComponent.vue'
-/* import SortByComponent from '@/components/SortByComponent.vue' */
 import ModalComponent from '@/components/ModalComponent.vue'
 import { api } from '@/services'
 
@@ -87,7 +85,6 @@ export default {
   name: 'HomeView',
   components: {
     CardsComponent,
-    /* SortByComponent, */
     ModalComponent
   },
   data () {
